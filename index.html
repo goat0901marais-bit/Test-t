@@ -1,601 +1,631 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T | 民泊運営・管理</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <title>宿泊施設紹介 | 株式会社T</title>
 
-    <!-- Custom Config & Styles -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            dark: '#1a202c', // Navy/Dark Gray equivalent
-                            main: '#2d3748',
-                            light: '#f7fafc',
-                            accent: '#4a5568',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['"Noto Sans JP"', 'sans-serif'],
-                    }
-                }
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #222;
+            --sub: #666;
+            --line: #e6e6e6;
+            --accent: #111;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans JP", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: 98%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* =========================
+   Header（既存サイトと同構成想定）
+========================= */
+
+        header {
+            border-bottom: 1px solid var(--line);
+            background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 68.8px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: .05em;
+            color: #2b2b2b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .logo a:hover {
+            color: #555;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            font-size: 17px;
+            color: var(--sub);
+        }
+
+        nav a:hover {
+            color: var(--text);
+        }
+
+
+        /* =========================
+   nav内クローズボタン
+========================= */
+
+        nav {
+            position: relative;
+            /* これ追加（重要） */
+        }
+
+        .nav-close {
+            position: absolute;
+            top: 24px;
+            right: 32px;
+            font-size: 24px;
+            background: none;
+            border: 1px solid #111;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+        }
+
+        .nav-close {
+            display: none;
+        }
+
+        @media(max-width:960px) {
+
+            nav {
+                position: relative;
+            }
+
+            .nav-close {
+                display: block;
+                position: absolute;
+                top: 9px;
+                right: 13px;
+                font-size: 24px;
+                background: none;
+                border: 1px solid #111;
+                width: 47px;
+                height: 34px;
+                cursor: pointer;
+            }
+
+        }
+
+        /* =========================
+   ここからハンバーガー追加
+========================= */
+
+        .menu-toggle {
+            display: none;
+            width: 47px;
+            height: 34px;
+            border: 1px solid #111;
+            background: #fff;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            z-index: 0;
+            padding: var(--padding, 10px 15px);
+        }
+
+        .menu-toggle span {
+            position: relative;
+            width: 15px;
+            height: 2px;
+            background: #111;
+            transition: .1s ease;
+        }
+
+        .menu-toggle span::before,
+        .menu-toggle span::after {
+            content: "";
+            position: absolute;
+            width: 15px;
+            height: 2px;
+            background: #111;
+            left: 0;
+            transition: 0.3s ease;
+        }
+
+        .menu-toggle span::before {
+            top: -5px;
+        }
+
+        .menu-toggle span::after {
+            top: 5px;
+        }
+
+        /* 開いたとき（×） */
+        .menu-toggle.active span {
+            background: transparent;
+        }
+
+        .menu-toggle.active span::before {
+            top: 0;
+            transform: rotate(45deg);
+        }
+
+        .menu-toggle.active span::after {
+            top: 0;
+            transform: rotate(-45deg);
+        }
+
+        @media(max-width:960px) {
+
+            nav {
+                position: fixed;
+                top: 0;
+                left: -113%;
+                width: 360px;
+                height: 100vh;
+                background: #fff;
+                padding: 71px 20px;
+                transition: 0.5s cubic-bezier(.77, 0, .18, 1);
+                z-index: 200;
+            }
+
+            nav.active {
+                left: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                font-size: 16px;
+                letter-spacing: .08em;
+            }
+
+            nav a {
+                color: #2b2b2b;
+                font-weight: bold;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            body.menu-open {
+                overflow: hidden;
             }
         }
-    </script>
-    <style>
-        body {
-            font-family: 'Noto Sans JP', sans-serif;
-            color: #333;
-            line-height: 1.8;
-            -webkit-font-smoothing: antialiased;
+
+        /* リスト全体 */
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
 
-        /* Smooth page transition setup */
-        .page-section {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.4s ease-in-out;
+        /* 各メニュー項目 */
+        .nav-item {
+            position: relative;
+            overflow: hidden;
         }
-        .page-section.active {
+
+        /* リンク */
+        .nav-item a {
+            position: relative;
             display: block;
-            opacity: 1;
+            padding: 16px 13px;
+            text-decoration: none;
+            color: #000;
+            z-index: 1;
+            font-weight: bold;
         }
 
-        /* Swiper Customization */
-        .swiper {
-            width: 100%;
-            height: 60vh;
-            min-height: 400px;
-        }
-        .swiper-slide {
-            background-position: center;
-            background-size: cover;
-            position: relative;
-        }
-        .swiper-slide::after {
-            content: '';
+        /* 背景アニメーション */
+        .nav-item::before {
+            content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3); /* Overlay for text readability */
-        }
-        .slide-content {
-            position: relative;
-            z-index: 10;
+            inset: 0;
+            background: #7fbf73;
+            /* ←今の緑に合わせて調整 */
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.4s cubic-bezier(.4, 0, .2, 1);
+            z-index: 0;
         }
 
-        /* Intersection Observer Animation Classes */
-        .fade-up {
+        /* hover時 */
+        .nav-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* =========================
+   Hero
+========================= */
+
+        .hero {
+            position: relative;
+            height: 55vh;
+            min-height: 360px;
+            overflow: hidden;
+        }
+
+        .hero img {
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(.85);
+        }
+
+        .hero-text {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1100px;
+            color: #fff;
+        }
+
+        .hero-text h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .hero-text p {
+            font-size: 14px;
+            opacity: .9;
+        }
+
+        /* =========================
+   Section
+========================= */
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 40px;
+        }
+
+        /* =========================
+   Cards
+========================= */
+
+        .cards {
+            display: grid;
+            gap: 40px;
+        }
+
+        .card {
+            border: 1px solid var(--line);
+            background: #fff;
+            transition: transform .3s ease, box-shadow .3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .05);
+        }
+
+        .card-image {
+            aspect-ratio: 3/2;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+
+        .meta {
+            font-size: 13px;
+            color: var(--sub);
+            margin-bottom: 14px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: var(--sub);
+            margin-bottom: 18px;
+        }
+
+        .button {
+            display: inline-block;
+            font-size: 13px;
+            padding: 10px 18px;
+            border: 1px solid var(--accent);
+            transition: .2s;
+        }
+
+        .button:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* =========================
+   About Operation
+========================= */
+
+        .operation {
+            background: #f7f7f7;
+            padding: 80px 0;
+        }
+
+        .operation p {
+            max-width: 700px;
+            color: var(--sub);
+            font-size: 14px;
+        }
+
+        /* =========================
+   Footer
+========================= */
+
+        footer {
+            border-top: 1px solid var(--line);
+            padding: 60px 0;
+            font-size: 13px;
+            color: var(--sub);
+        }
+
+        /* =========================
+   Animation
+========================= */
+
+        .fade {
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transition: all .8s ease;
         }
-        .fade-up.visible {
+
+        .fade.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Form Styles */
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 4px;
-            margin-top: 6px;
-            background-color: #f8fafc;
-            transition: border-color 0.2s;
+        @media(min-width:768px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #4a5568;
-            background-color: #fff;
-        }
-        label {
-            font-weight: 500;
-            font-size: 0.95rem;
-            color: #2d3748;
-        }
-        .required::after {
-            content: '*';
-            color: #e53e3e;
-            margin-left: 4px;
+
+        @media(min-width:1024px) {
+            .cards {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .hero-text h1 {
+                font-size: 40px;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-50 flex flex-col min-h-screen">
 
-    <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-6 h-20 flex items-center justify-between">
-            <h1 class="text-2xl font-bold tracking-widest text-brand-dark cursor-pointer" onclick="router('index')">
-                T
-                <span class="text-xs block font-normal text-gray-500 tracking-normal">T | 民泊運営・管理</span>
-            </h1>
-            <nav class="hidden md:block">
-                <ul class="flex space-x-8 text-sm font-medium text-gray-600">
-                    <li><a href="#" onclick="router('index'); return false;" class="hover:text-brand-dark transition-colors py-2">ホーム</a></li>
-                    <li><a href="#" onclick="router('service'); return false;" class="hover:text-brand-dark transition-colors py-2">業務案内</a></li>
-                    <li><a href="#" onclick="router('contact'); return false;" class="bg-brand-main text-white px-5 py-2.5 rounded hover:bg-brand-dark transition-colors">お問い合わせ</a></li>
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <div class="logo"><a href="https://tigram-jp.com/">株式会社T</a></div>
+
+            <nav id="nav-menu">
+                <button class="nav-close" id="nav-close">×</button>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="https://tigram-jp.com/">トップページ</a></li>
+                    <li class="nav-item"><a href="https://tigram-jp.com/%e6%a6%82%e8%a6%81/">会社概要</a></li>
+                    <li class="nav-item"><a
+                            href="https://tigram-jp.com/%e3%83%9d%e3%83%bc%e3%83%88%e3%83%95%e3%82%a9%e3%83%aa%e3%82%aa/">事業内容</a>
+                    </li>
+                    <li class="nav-item"><a
+                            href="https://tigram-jp.com/%e3%83%97%e3%83%ad%e3%82%b8%e3%82%a7%e3%82%af%e3%83%88%e3%81%ae%e8%a9%b3%e7%b4%b0/">SDGsの取り組み</a>
+                    </li>
+                    <li class="nav-item"><a href="https://tigram-jp.com/blog/">ニュース</a></li>
+                    <li class="nav-item"><a href="https://tigram-jp.com/contact/">お問い合わせ</a></li>
                 </ul>
             </nav>
-            <!-- Mobile Menu Button (Simple implementation) -->
-            <button class="md:hidden text-gray-600 focus:outline-none" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-            </button>
-        </div>
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-            <a href="#" onclick="router('index'); document.getElementById('mobile-menu').classList.add('hidden'); return false;" class="block px-6 py-3 text-gray-600 border-b">ホーム</a>
-            <a href="#" onclick="router('service'); document.getElementById('mobile-menu').classList.add('hidden'); return false;" class="block px-6 py-3 text-gray-600 border-b">業務案内</a>
-            <a href="#" onclick="router('contact'); document.getElementById('mobile-menu').classList.add('hidden'); return false;" class="block px-6 py-3 text-brand-main font-medium">お問い合わせ</a>
+
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+            </div>
         </div>
     </header>
 
-    <!-- Main Content Area -->
-    <main class="flex-grow">
-
-        <!-- ==================== PAGE: INDEX ==================== -->
-        <div id="page-index" class="page-section active">
-            
-            <!-- Hero Section (Swiper) -->
-            <section class="relative bg-brand-dark">
-                <div class="swiper mySwiper">
-                    <div class="swiper-wrapper">
-                        <!-- Slide 1: Interior/Calm -->
-                        <div class="swiper-slide" style="background-image: url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
-                            <div class="h-full flex items-center justify-center container mx-auto px-6 slide-content">
-                                <div class="text-white text-center md:text-left md:w-full">
-                                    <p class="text-lg md:text-xl mb-4 tracking-widest opacity-90">確かな運営、安心の管理。</p>
-                                    <h2 class="text-4xl md:text-5xl font-bold leading-tight">オーナー様とゲストを繋ぐ、<br>誠実な民泊運営。</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Slide 2: Key/Management -->
-                        <div class="swiper-slide" style="background-image: url('https://images.unsplash.com/photo-1556740758-90de374c12ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
-                            <div class="h-full flex items-center justify-center container mx-auto px-6 slide-content">
-                                <div class="text-white text-center md:text-left md:w-full">
-                                    <p class="text-lg md:text-xl mb-4 tracking-widest opacity-90">細部まで目の行き届いた管理体制</p>
-                                    <h2 class="text-4xl md:text-5xl font-bold leading-tight">大切な資産の価値を<br>維持・向上させます。</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Slide 3: Cleanliness/Details -->
-                        <div class="swiper-slide" style="background-image: url('https://images.unsplash.com/photo-1584622050111-993a426fbf0a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
-                            <div class="h-full flex items-center justify-center container mx-auto px-6 slide-content">
-                                <div class="text-white text-center md:text-left md:w-full">
-                                    <p class="text-lg md:text-xl mb-4 tracking-widest opacity-90">清潔さと快適さの追求</p>
-                                    <h2 class="text-4xl md:text-5xl font-bold leading-tight">また訪れたくなる<br>空間づくりを。</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- About Section -->
-            <section class="py-24 bg-white">
-                <div class="container mx-auto px-6 max-w-4xl text-center fade-up">
-                    <span class="text-brand-main text-sm font-bold tracking-widest uppercase mb-4 block">About Us</span>
-                    <h3 class="text-3xl font-bold text-gray-800 mb-8">「t」について</h3>
-                    <p class="text-gray-600 leading-8 text-lg mb-8">
-                        私たちは、小規模・個人オーナー様向けの民泊運営・管理を専門とするチームです。<br>
-                        派手な集客や一時的な収益性よりも、「長く安心して運営できること」を最優先に考えています。<br>
-                        清掃の品質、ゲストへの丁寧な対応、そして近隣への配慮。<br>
-                        当たり前のことを実直に積み重ね、オーナー様の資産を守ります。
-                    </p>
-                </div>
-            </section>
-
-            <!-- Service Summary -->
-            <section class="py-24 bg-gray-50">
-                <div class="container mx-auto px-6">
-                    <div class="text-center mb-16 fade-up">
-                        <h3 class="text-2xl font-bold text-gray-800">業務内容</h3>
-                        <p class="text-gray-500 mt-2">ティグラムが提供する主なサービス</p>
-                    </div>
-                    
-                    <div class="grid md:grid-cols-3 gap-10">
-                        <!-- Item 1 -->
-                        <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow fade-up">
-                            <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="清潔なキッチンの画像" class="w-full h-56 object-cover">
-                            <div class="p-8">
-                                <h4 class="text-xl font-bold text-gray-800 mb-4">運営代行・ゲスト対応</h4>
-                                <p class="text-gray-600 text-sm leading-relaxed">
-                                    予約サイトの管理から、ゲストからのお問い合わせ対応まで一括して行います。多言語対応も可能ですので、海外からのゲストも安心してお迎えできます。
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Item 2 -->
-                        <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow fade-up">
-                            <img src="https://images.unsplash.com/photo-1581578731117-104f2a9d4546?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="清潔なリネンとベッドの画像" class="w-full h-56 object-cover">
-                            <div class="p-8">
-                                <h4 class="text-xl font-bold text-gray-800 mb-4">清掃・リネン手配</h4>
-                                <p class="text-gray-600 text-sm leading-relaxed">
-                                    ホテルクオリティの清掃基準を設け、清潔な空間を維持します。消耗品の補充やリネンのクリーニング手配もすべてお任せください。
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Item 3 -->
-                        <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow fade-up">
-                            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="管理ノートとペンの画像" class="w-full h-56 object-cover">
-                            <div class="p-8">
-                                <h4 class="text-xl font-bold text-gray-800 mb-4">物件管理・レポート</h4>
-                                <p class="text-gray-600 text-sm leading-relaxed">
-                                    室内の設備点検を定期的に行い、破損や不具合を早期に発見します。毎月の収支や運営状況は、分かりやすいレポートでご報告いたします。
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center mt-12 fade-up">
-                        <a href="#" onclick="router('service'); return false;" class="inline-block border border-gray-400 text-gray-600 px-8 py-3 hover:bg-gray-100 transition-colors">詳しく見る</a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Operation Policy -->
-            <section class="py-24 bg-white">
-                <div class="container mx-auto px-6 max-w-4xl fade-up">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-10 text-center">運営方針</h3>
-                    <div class="bg-gray-50 p-8 md:p-12 rounded border-l-4 border-brand-main">
-                        <ul class="space-y-6 text-gray-700">
-                            <li class="flex items-start">
-                                <span class="text-brand-main mr-3 font-bold">01.</span>
-                                <div>
-                                    <strong class="block text-gray-900 mb-1">法令遵守の徹底</strong>
-                                    住宅宿泊事業法や旅館業法に基づき、適法かつ健全な運営を行います。近隣トラブルを未然に防ぐ体制を整えます。
-                                </div>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-brand-main mr-3 font-bold">02.</span>
-                                <div>
-                                    <strong class="block text-gray-900 mb-1">透明性の高い報告</strong>
-                                    不透明な経費計上は一切行いません。運営にかかった費用と売上は明朗に開示し、信頼関係を築きます。
-                                </div>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-brand-main mr-3 font-bold">03.</span>
-                                <div>
-                                    <strong class="block text-gray-900 mb-1">物件価値の維持</strong>
-                                    ただ部屋を貸すだけではなく、定期的な換気やメンテナンスを行い、建物としての資産価値が下がらないよう配慮します。
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+    <section class="hero">
+        <img src="img/main.avif" alt="セレーナ">
+        <div class="hero-text">
+            <h1>民泊・旅館事業のご紹介</h1>
+            <p>株式会社Tが管理する宿泊施設一覧です。福岡県で6ヶ所を経営しております。ご予約はAirbnb,Booking.comなどの外部サイトよりご確認ください。</p>
         </div>
+    </section>
 
-        <!-- ==================== PAGE: SERVICE ==================== -->
-        <div id="page-service" class="page-section">
-            <section class="bg-gray-100 py-16">
-                <div class="container mx-auto px-6">
-                    <h2 class="text-3xl font-bold text-gray-800">業務案内</h2>
-                    <p class="text-gray-500 mt-2">Service Details</p>
-                </div>
-            </section>
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title fade">宿泊施設一覧</h2>
 
-            <!-- Service Intro -->
-            <section class="py-20 bg-white">
-                <div class="container mx-auto px-6 max-w-5xl">
-                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-8 leading-relaxed">
-                        オーナー様の「手」となり「目」となる。<br>
-                        実務重視の運営サポート。
-                    </h3>
-                    <p class="text-gray-600 leading-7">
-                        民泊運営には、日々の予約管理から清掃、緊急時の対応まで多岐にわたる業務が発生します。
-                        ティグラムでは、これら煩雑な業務を全て代行し、オーナー様が安心して物件を任せられる体制を提供します。
-                        特に「清掃の質」と「迅速なレスポンス」には自信があります。
-                    </p>
-                </div>
-            </section>
+            <div class="cards">
 
-            <!-- Service Details -->
-            <section class="py-16 bg-gray-50">
-                <div class="container mx-auto px-6 max-w-6xl space-y-20">
-                    
-                    <!-- Detail 1 -->
-                    <div class="grid md:grid-cols-2 gap-10 items-center fade-up">
-                        <div>
-                            <img src="https://images.unsplash.com/photo-1502005229766-939760a7cb0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="落ち着いたリビングの内装" class="rounded shadow-sm w-full h-80 object-cover">
-                        </div>
-                        <div>
-                            <h4 class="text-2xl font-bold text-gray-800 mb-4">アカウント作成・リスティング管理</h4>
-                            <p class="text-gray-600 leading-7 mb-4">
-                                主要な民泊プラットフォーム（Airbnbなど）への登録作業、写真撮影の手配、魅力的な紹介文の作成を行います。
-                                日々の価格調整も、近隣の相場やイベント状況を見ながら手動で丁寧に調整し、稼働率の最適化を図ります。
-                            </p>
-                        </div>
+                <div class="card fade">
+                    <div class="card-image">
+                        <img src="img/セレーナ.avif" alt="博多の宿泊施設">
                     </div>
-
-                    <!-- Detail 2 -->
-                    <div class="grid md:grid-cols-2 gap-10 items-center fade-up md:flex-row-reverse">
-                        <div class="md:order-2">
-                            <img src="https://images.unsplash.com/photo-1556910103-1c02745a30bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="キッチンとダイニング" class="rounded shadow-sm w-full h-80 object-cover">
-                        </div>
-                        <div class="md:order-1">
-                            <h4 class="text-2xl font-bold text-gray-800 mb-4">清掃・リネンサプライ</h4>
-                            <p class="text-gray-600 leading-7 mb-4">
-                                ゲストのチェックアウト後、速やかに清掃スタッフを派遣します。
-                                表面的な掃除だけでなく、排水溝や換気扇など見えにくい箇所のチェックも定期的に実施。
-                                ホテルライクな清潔なリネンを用意し、ゲストに快適な睡眠を提供します。
-                            </p>
-                        </div>
+                    <div class="card-body">
+                        <h3>セレーナ</h3>
+                        <div class="meta">南福岡駅 徒歩約7分 / 雑餉隈駅約10分 / 福岡空港国際線から車で13分 / 博多天神アクセス抜群 / 最大3名</div>
+                        <p>海外の方、日本の方どちらにも人気のある地域です♩
+                            長期も大歓迎です☆</p>
+                        <a href="https://www.airbnb.jp/rooms/1465879209917295700?source_impression_id=p3_1772415395_P3SjJmMLfpyEMhrx"
+                            class="button">外部予約サイトで見る</a>
                     </div>
                 </div>
-            </section>
 
-            <!-- Operation Flow -->
-            <section class="py-24 bg-white">
-                <div class="container mx-auto px-6 max-w-5xl">
-                    <h3 class="text-2xl font-bold text-gray-800 text-center mb-16">運営開始までの流れ</h3>
-                    
-                    <div class="grid md:grid-cols-2 gap-12 items-center fade-up">
-                        <div class="space-y-8">
-                            <div class="flex">
-                                <div class="flex-shrink-0 w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-700 mr-6">01</div>
-                                <div>
-                                    <h4 class="text-lg font-bold text-gray-800">お問い合わせ・ヒアリング</h4>
-                                    <p class="text-gray-600 text-sm mt-2">物件の状況やオーナー様のご要望をお伺いします。まだ物件が決まっていない段階でのご相談も可能です。</p>
-                                </div>
-                            </div>
-                            <div class="flex">
-                                <div class="flex-shrink-0 w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-700 mr-6">02</div>
-                                <div>
-                                    <h4 class="text-lg font-bold text-gray-800">現地調査・プラン提案</h4>
-                                    <p class="text-gray-600 text-sm mt-2">実際に現地を拝見し、必要な設備やインテリアの提案、収支シミュレーションを作成します。</p>
-                                </div>
-                            </div>
-                            <div class="flex">
-                                <div class="flex-shrink-0 w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-700 mr-6">03</div>
-                                <div>
-                                    <h4 class="text-lg font-bold text-gray-800">セットアップ・許認可申請</h4>
-                                    <p class="text-gray-600 text-sm mt-2">消防設備の設置や行政への申請サポートを行います。家具家電の搬入や写真撮影もこの時期に進めます。</p>
-                                </div>
-                            </div>
-                            <div class="flex">
-                                <div class="flex-shrink-0 w-12 h-12 bg-brand-main text-white rounded-full flex items-center justify-center font-bold mr-6">04</div>
-                                <div>
-                                    <h4 class="text-lg font-bold text-gray-800">運営開始</h4>
-                                    <p class="text-gray-600 text-sm mt-2">予約サイトで公開を開始します。以後のゲスト対応や管理はすべてティグラムにお任せください。</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <img src="https://images.unsplash.com/photo-1542626991-cbc4e32524cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="ミーティング風景" class="rounded shadow-lg w-full object-cover">
-                        </div>
+                <div class="card fade">
+                    <div class="card-image">
+                        <img src="img/折尾INホテル305.avif" alt="折尾INホテル305">
+                    </div>
+                    <div class="card-body">
+                        <h3>折尾INホテル 305</h3>
+                        <div class="meta">無料駐車場有 / 折尾駅から車で4分 / 徒歩17分 / 長期歓迎 / コンビニ徒歩1分 / 最大3名</div>
+                        <p>折尾駅から車やタクシーで4分
+                            折尾駅から徒歩17分
+                            仕事で出張の方/旅行の方/長期大歓迎です☆</p>
+                        <a href="https://www.airbnb.jp/rooms/1499887828987231559?source_impression_id=p3_1772416287_P3bVW6YnVcr1AM9w"
+                            class="button">外部予約サイトで見る</a>
                     </div>
                 </div>
-            </section>
 
-            <!-- Notes -->
-            <section class="py-12 bg-gray-50 border-t">
-                <div class="container mx-auto px-6 max-w-4xl text-sm text-gray-500 fade-up">
-                    <p class="mb-2">※ 物件の立地や管理規約によっては、民泊運営ができない場合がございます。事前の調査が重要ですので、まずはお気軽にご相談ください。</p>
-                    <p>※ 弊社は運営代行業務を主としており、不動産の直接売買や投資勧誘は行っておりません。</p>
-                </div>
-            </section>
-        </div>
-
-        <!-- ==================== PAGE: CONTACT ==================== -->
-        <div id="page-contact" class="page-section">
-            <section class="bg-gray-100 py-16">
-                <div class="container mx-auto px-6">
-                    <h2 class="text-3xl font-bold text-gray-800">お問い合わせ</h2>
-                    <p class="text-gray-500 mt-2">Contact Us</p>
-                </div>
-            </section>
-
-            <section class="py-20 bg-white">
-                <div class="container mx-auto px-6 max-w-2xl">
-                    <div class="mb-12 text-center">
-                        <p class="text-gray-600 leading-7">
-                            民泊運営に関するご相談、お見積りのご依頼など、お気軽にお問い合わせください。<br>
-                            内容を確認後、2営業日以内に担当者よりご連絡いたします。
-                        </p>
+                <div class="card fade">
+                    <div class="card-image">
+                        <img src="img/ユニヴァ福岡.avif" alt="ユニヴァ福岡">
                     </div>
-
-                    <form action="#" method="post" class="space-y-8 bg-white p-0 md:p-8 rounded" onsubmit="event.preventDefault(); alert('デモサイトのため送信されません。');">
-                        
-                        <!-- Name -->
-                        <div>
-                            <label for="name" class="block text-gray-700 mb-2 required">お名前</label>
-                            <input type="text" id="name" name="name" placeholder="例：山田 太郎" required>
-                        </div>
-
-                        <!-- Email -->
-                        <div>
-                            <label for="email" class="block text-gray-700 mb-2 required">メールアドレス</label>
-                            <input type="email" id="email" name="email" placeholder="例：info@example.com" required>
-                        </div>
-
-                        <!-- Phone -->
-                        <div>
-                            <label for="phone" class="block text-gray-700 mb-2">電話番号 <span class="text-xs font-normal text-gray-500 ml-2">（任意）</span></label>
-                            <input type="tel" id="phone" name="phone" placeholder="例：03-1234-5678">
-                        </div>
-
-                        <!-- Type -->
-                        <div>
-                            <label for="type" class="block text-gray-700 mb-2 required">お問い合わせ種別</label>
-                            <select id="type" name="type" required>
-                                <option value="" disabled selected>選択してください</option>
-                                <option value="operation">民泊運営について</option>
-                                <option value="management">管理の相談</option>
-                                <option value="other">その他</option>
-                            </select>
-                        </div>
-
-                        <!-- Message -->
-                        <div>
-                            <label for="message" class="block text-gray-700 mb-2 required">お問い合わせ内容</label>
-                            <textarea id="message" name="message" rows="6" placeholder="物件の所在地や、現在のお悩みなどをご記入ください。" required></textarea>
-                        </div>
-
-                        <!-- Submit -->
-                        <div class="text-center pt-4">
-                            <button type="submit" class="bg-brand-main text-white px-10 py-4 rounded font-bold hover:bg-brand-dark transition-colors w-full md:w-auto">
-                                送信する
-                            </button>
-                        </div>
-                    </form>
-                    
-                    <div class="mt-12 p-6 bg-gray-50 border rounded text-center text-sm text-gray-600">
-                        <p>※ お送りいただいた個人情報は、お問い合わせへの回答のみに利用いたします。</p>
-                        <p class="mt-2">お電話でのお問い合わせ： <strong class="text-lg text-gray-800">03-XXXX-XXXX</strong> （平日 10:00 - 18:00）</p>
+                    <div class="card-body">
+                        <h3>ユニヴァ福岡</h3>
+                        <div class="meta">地下鉄梅林駅 徒歩約8分 / 福大前駅まで約10分 / 博多/天神まで地下鉄で20分アクセス抜群 / 最大3名</div>
+                        <p>博多駅から地下鉄１本「梅林駅」から徒歩9分！
+                            海外の方、日本の方どちらにも人気のある地域です♩
+                            長期も大歓迎です☆</p>
+                        <a href="https://www.airbnb.jp/rooms/1509536430999585764?source_impression_id=p3_1772417380_P3Kc10rWjl71XreT"
+                            class="button">外部予約サイトで見る</a>
                     </div>
                 </div>
-            </section>
-        </div>
 
-        <!-- Common CTA Section (Visible on Index and Service) -->
-        <div id="common-cta" class="bg-gray-800 py-16 text-center text-white">
-            <div class="container mx-auto px-6">
-                <h3 class="text-2xl font-bold mb-4">運営管理のご相談はこちら</h3>
-                <p class="mb-8 opacity-80">物件の規模に関わらず、まずは一度お問い合わせください。</p>
-                <a href="#" onclick="router('contact'); return false;" class="inline-block bg-white text-brand-dark px-8 py-3 rounded font-bold hover:bg-gray-200 transition-colors">
-                    お問い合わせフォームへ
-                </a>
+                <div class="card fade">
+                    <div class="card-image">
+                        <img src="img/スペース福岡.avif" alt="スペース福岡">
+                    </div>
+                    <div class="card-body">
+                        <h3>スペース福岡</h3>
+                        <div class="meta">地下鉄梅林駅まで徒歩約8分 / 福大前駅まで約10分 / 博多 / 天神まで地下鉄で20分/ 最大3名</div>
+                        <p>博多駅から地下鉄１本「梅林駅」から徒歩9分！
+                            海外の方、日本の方どちらにも人気のある地域です♩
+                            長期も大歓迎です☆</p>
+                        <a href="https://www.airbnb.jp/rooms/1541931456705126857?source_impression_id=p3_1772418272_P3gFlWuL6GlCSJy6"
+                            class="button">外部予約サイトで見る</a>
+                    </div>
+                </div>
+
+                <div class="card fade">
+                    <div class="card-image">
+                        <img src="img/シーサイド姪浜.avif" alt="薬院エリアの落ち着いた室内">
+                    </div>
+                    <div class="card-body">
+                        <h3>シーサイド姪浜</h3>
+                        <div class="meta">博多駅・福岡空港まで電車で1本！戸建て / 駐車場1台無料最大8名</div>
+                        <p>海、生の松原まで徒歩3分！糸島まで車で20分！
+                            自然が好きな方はすごくおすすめです◎
+                            ドームまでも電車で一本です。
+
+                            無料駐車場を1台分完備しており、近隣に有料駐車場もあるため、レンタカーでお越しのお客様にもおすすめです。</p>
+                        <a href="https://www.airbnb.jp/rooms/1580003299039301217?source_impression_id=p3_1772418925_P3yFXngRz2ox7-K0"
+                            class="button">外部予約サイトで見る</a>
+                    </div>
+                </div>
+
+
+
             </div>
         </div>
+    </section>
 
-    </main>
+    <section class="operation">
+        <div class="container fade">
+            <h2 class="section-title">運営について</h2>
+            <p>
+                株式会社Tは宿泊施設の管理・運営を行っています。
+                清掃手配、ゲスト対応、室内点検など日々の実務を重視し、
+                安定した運営体制を整えています。
+                予約機能は外部予約プラットフォームを利用しています。
+            </p>
+        </div>
+    </section>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 pt-16 pb-8">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-8 mb-12">
-                <div class="md:col-span-1">
-                    <h2 class="text-xl font-bold text-brand-dark mb-4">T</h2>
-                    <p class="text-sm text-gray-500">
-                        誠実な運営で、<br>
-                        オーナー様とゲストを繋ぐ。
-                    </p>
-                </div>
-                <div class="md:col-span-3 grid grid-cols-2 md:grid-cols-3 gap-8 text-sm">
-                    <div>
-                        <h4 class="font-bold text-gray-700 mb-4">コンテンツ</h4>
-                        <ul class="space-y-2 text-gray-600">
-                            <li><a href="#" onclick="router('index'); return false;" class="hover:text-brand-main">ホーム</a></li>
-                            <li><a href="#" onclick="router('service'); return false;" class="hover:text-brand-main">業務案内</a></li>
-                            <li><a href="#" onclick="router('contact'); return false;" class="hover:text-brand-main">お問い合わせ</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-gray-700 mb-4">会社概要</h4>
-                        <p class="text-gray-600 mb-2">ティグラム</p>
-                        <p class="text-gray-600">〒100-0000<br>東京都渋谷区神南1-XX-XX</p>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-gray-100 pt-8 text-center">
-                <p class="text-xs text-gray-400">© T. All Rights Reserved.</p>
-            </div>
+    <footer>
+        <div class="container">
+            <p>株式会社T</p>
+            <p>福岡市内を中心に宿泊施設を管理しています。</p>
         </div>
     </footer>
 
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-    <!-- Scripts -->
     <script>
-        // --- 1. Simple Router Logic ---
-        function router(pageId) {
-            // Hide all pages
-            document.querySelectorAll('.page-section').forEach(el => {
-                el.classList.remove('active');
-                // Use setTimeout to allow display:none to take effect after opacity transition if desired, 
-                // but for simplicity in this structure, we toggle class immediately.
-                // For smoother transition, we just toggle 'active' which handles opacity.
-                // But we need to handle display:none via CSS properly.
-                
-                // For instant switch tailored for this requirement:
-                el.style.display = 'none';
-            });
-            
-            // Show target page
-            const target = document.getElementById('page-' + pageId);
-            if (target) {
-                target.style.display = 'block';
-                // Trigger reflow
-                void target.offsetWidth; 
-                target.classList.add('active');
-            }
-
-            // Scroll to top
-            window.scrollTo(0, 0);
-
-            // Handle CTA Visibility (Hide CTA on Contact page to avoid redundancy)
-            const cta = document.getElementById('common-cta');
-            if(pageId === 'contact') {
-                cta.style.display = 'none';
-            } else {
-                cta.style.display = 'block';
-            }
-        }
-
-        // --- 2. Swiper Initialization ---
-        const swiper = new Swiper(".mySwiper", {
-            loop: false, // Requested: No loop
-            effect: "fade", // Gentle fade effect for sophistication
-            speed: 1500, // Slow transition
-            autoplay: {
-                delay: 6000, // Very slow autoplay
-                disableOnInteraction: false,
-            },
-            allowTouchMove: false, // Keep it static/calm as requested, or true if swipe needed
-            // No navigation arrows as requested
-        });
-
-        // --- 3. Intersection Observer for Fade-up Animation ---
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
+        const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // Animate only once
+                    entry.target.classList.add("visible");
+                    obs.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.15 });
 
-        // Attach observer to elements
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize Router
-            router('index');
-
-            // Select elements to animate
-            const fadeElements = document.querySelectorAll('.fade-up');
-            fadeElements.forEach(el => observer.observe(el));
+        document.querySelectorAll(".fade").forEach(el => {
+            observer.observe(el);
         });
 
-        // Re-attach observer when changing "pages" (optional, but good if content is dynamic. 
-        // Since content is static in DOM, just initial load is fine, but we need to ensure hidden elements trigger when shown)
-        // In this simple display:none implementation, IntersectionObserver works automatically when element becomes visible.
 
+        const toggle = document.getElementById("menu-toggle");
+        const nav = document.getElementById("nav-menu");
+        const closeBtn = document.getElementById("nav-close"); // ←追加
+
+        function closeMenu() {
+            toggle.classList.remove("active");
+            nav.classList.remove("active");
+            document.body.classList.remove("menu-open");
+        }
+
+        toggle.addEventListener("click", () => {
+            toggle.classList.toggle("active");
+            nav.classList.toggle("active");
+            document.body.classList.toggle("menu-open");
+        });
+
+        closeBtn.addEventListener("click", closeMenu); // ←追加
     </script>
+
 </body>
+
 </html>
