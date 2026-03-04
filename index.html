@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>宿泊施設紹介 | 株式会社T</title>
+    <title>宿泊施設紹介 | 株式会社Tigram</title>
 
     <style>
         :root {
@@ -408,12 +408,119 @@
         /* =========================
    Footer
 ========================= */
-
         footer {
             border-top: 1px solid var(--line);
             padding: 60px 0;
             font-size: 13px;
             color: var(--sub);
+            background: #14171c;
+            color: #ffffff;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: bold;
+        }
+
+        .footer-nav {
+            list-style: none;
+            margin-left: auto;
+            text-align: right;   
+        }
+
+        .footer-nav li {
+            margin-bottom: 12px;
+        }
+
+        .footer-nav a {
+            font-size: 14px;
+            color: var(--sub);
+            transition: .2s;
+            color: #ffffff;
+        }
+
+        .footer-nav a:hover {
+            color: var(--text);
+            color: #e6e6e6;
+        }
+
+        .footer-copy {
+            font-size: 12px;
+            color: var(--sub);
+            color: #ffffff;
+        }
+
+        .footer-company {
+            flex: 1;
+            text-align: left;
+        }
+
+        /* =========================
+   Footer 右ナビ追加分
+========================= */
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .footer-nav {
+            list-style: none;
+            text-align: right;
+        }
+
+        .footer-nav li {
+            margin-bottom: 12px;
+        }
+
+        /* =========================
+   Footer Hover Animation
+   （ヘッダーと同じ動き）
+========================= */
+
+        .footer-nav li {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-nav a {
+            position: relative;
+            display: inline-block;
+            padding: 6px 0;
+            z-index: 1;
+        }
+
+        /* 背景アニメーション */
+        .footer-nav li::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: #7fbf73;
+            /* ヘッダーと同じ色 */
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.4s cubic-bezier(.4, 0, .2, 1);
+            z-index: 0;
+        }
+
+        /* hover */
+        .footer-nav li:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* =========================
+   Responsive
+========================= */
+
+        @media(max-width:768px) {
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .footer-nav {
+                text-align: left;
+            }
+
         }
 
         /* =========================
@@ -585,10 +692,28 @@
         </div>
     </section>
 
-    <footer>
+    <footer class="section footer">
+        <div class="container footer-inner">
+
+            <div class="footer-company">
+                <p class="footer-name">株式会社T</p>
+                <p>福岡県内を中心に宿泊施設の管理・運営を行っています。</p>
+            </div>
+
+            <ul class="footer-nav">
+                <li><a href="https://tigram-jp.com/">トップページ</a></li>
+                <li><a href="https://tigram-jp.com/%e6%a6%82%e8%a6%81/">会社概要</a></li>
+                <li><a
+                        href="https://tigram-jp.com/%e3%83%9d%e3%83%bc%e3%83%88%e3%83%95%e3%82%a9%e3%83%aa%e3%82%aa/">事業内容</a>
+                </li>
+                <li><a href="https://tigram-jp.com/blog/">ニュース</a></li>
+                <li><a href="https://tigram-jp.com/contact/">お問い合わせ</a></li>
+            </ul>
+
+        </div>
+
         <div class="container">
-            <p>株式会社T</p>
-            <p>福岡市内を中心に宿泊施設を管理しています。</p>
+            <p class="footer-copy">© 2026 T Co., Ltd.</p>
         </div>
     </footer>
 
