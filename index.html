@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>宿泊施設紹介 | 株式会社Tigram</title>
+    <title>福岡の民泊・宿泊施設一覧 | 株式会社T</title>
 
     <style>
         :root {
@@ -39,7 +39,7 @@
         }
 
         .container {
-            width: 98%;
+            width: 92%;
             max-width: 1100px;
             margin: 0 auto;
         }
@@ -279,17 +279,25 @@
 ========================= */
 
         .hero {
-            height: 65vh;
-            min-height: 420px;
+            height: 55vh;
+            min-height: 360px;
             position: relative;
             overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            pointer-events: none;
         }
 
         .hero img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(.75);
+            filter: brightness(.79);
         }
 
         .hero-text {
@@ -298,21 +306,28 @@
             left: 50%;
             transform: translate(-50%, -50%);
             width: 90%;
-            max-width: 900px;
+            max-width: 1100px;
             color: #fff;
             text-align: center;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, .6);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            /* 視認性向上のための影 */
+            z-index: 1;
         }
 
         .hero-text h1 {
-            font-size: 34px;
+            font-size: 32px;
             font-weight: 600;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
+            /* 少し余白を広げる */
         }
 
         .hero-text p {
-            font-size: 16px;
+            font-size: 15px;
+            /* 少し大きく */
+            opacity: 1;
+            /* 100%表示 */
             line-height: 2;
+            /* 行間を広げて見やすく */
             font-weight: 500;
         }
 
@@ -358,6 +373,11 @@
         .card-image img {
             height: 100%;
             object-fit: cover;
+        }
+
+        .card:hover img {
+            transform: scale(1.05);
+            transition: .4s;
         }
 
         .card-body {
@@ -435,9 +455,8 @@
 
         .footer-nav a {
             font-size: 14px;
-            color: var(--sub);
-            transition: .2s;
             color: #ffffff;
+            transition: .2s;
         }
 
         .footer-nav a:hover {
@@ -589,7 +608,7 @@
     </header>
 
     <section class="hero">
-        <img src="img/main.avif" alt="セレーナ">
+        <img src="img/main.avif" alt="福岡の宿泊施設イメージ">
 
         <div class="hero-text">
             <h1>民泊・旅館事業のご紹介</h1>
@@ -611,77 +630,77 @@
 
                 <div class="card fade">
                     <div class="card-image">
-                        <img src="img/セレーナ.avif" alt="博多の宿泊施設">
+                        <img src="img/セレーナ.avif" alt="福岡 博多・南福岡エリアの民泊施設 セレーナ" loading="lazy">
                     </div>
                     <div class="card-body">
                         <h3>セレーナ</h3>
-                        <div class="meta">南福岡駅 徒歩約7分 / 雑餉隈駅約10分 / 福岡空港国際線から車で13分 / 博多天神アクセス抜群 / 最大3名</div>
-                        <p>海外の方、日本の方どちらにも人気のある地域です♩
+                        <div class="meta">南福岡駅 徒歩約7分<br>雑餉隈駅約10分<br>福岡空港国際線から車で13分<br>博多天神アクセス抜群<br>最大3名</div>
+                        <p>海外の方、日本の方どちらにも人気のある地域です♩<br>
                             長期も大歓迎です☆</p>
                         <a href="https://www.airbnb.jp/rooms/1465879209917295700?source_impression_id=p3_1772415395_P3SjJmMLfpyEMhrx"
-                            class="button">外部予約サイトで見る</a>
+                            class="button" target="_blank" rel="noopener">外部予約サイトで見る</a>
                     </div>
                 </div>
 
                 <div class="card fade">
                     <div class="card-image">
-                        <img src="img/折尾INホテル305.avif" alt="折尾INホテル305">
+                        <img src="img/折尾INホテル305.avif" alt="福岡 折尾エリアの民泊施設 折尾INホテル305" loading="lazy">
                     </div>
                     <div class="card-body">
                         <h3>折尾INホテル 305</h3>
-                        <div class="meta">無料駐車場有 / 折尾駅から車で4分 / 徒歩17分 / 長期歓迎 / コンビニ徒歩1分 / 最大3名</div>
-                        <p>折尾駅から車やタクシーで4分
-                            折尾駅から徒歩17分
+                        <div class="meta">無料駐車場有<br>折尾駅から車で4分 / 徒歩17分<br>長期歓迎<br>コンビニ徒歩1分<br>最大3名</div>
+                        <p>折尾駅から車やタクシーで4分<br>
+                            折尾駅から徒歩17分<br>
                             仕事で出張の方/旅行の方/長期大歓迎です☆</p>
                         <a href="https://www.airbnb.jp/rooms/1499887828987231559?source_impression_id=p3_1772416287_P3bVW6YnVcr1AM9w"
-                            class="button">外部予約サイトで見る</a>
+                            class="button" target="_blank" rel="noopener">外部予約サイトで見る</a>
                     </div>
                 </div>
 
                 <div class="card fade">
                     <div class="card-image">
-                        <img src="img/ユニヴァ福岡.avif" alt="ユニヴァ福岡">
+                        <img src="img/ユニヴァ福岡.avif" alt="福岡 梅林エリアの民泊施設 ユニヴァ福岡" loading="lazy">
                     </div>
                     <div class="card-body">
                         <h3>ユニヴァ福岡</h3>
-                        <div class="meta">地下鉄梅林駅 徒歩約8分 / 福大前駅まで約10分 / 博多/天神まで地下鉄で20分アクセス抜群 / 最大3名</div>
-                        <p>博多駅から地下鉄１本「梅林駅」から徒歩9分！
-                            海外の方、日本の方どちらにも人気のある地域です♩
+                        <div class="meta">地下鉄梅林駅 徒歩約8分<br>福大前駅まで約10分<br>博多/天神まで地下鉄で20分アクセス抜群<br>最大3名</div>
+                        <p>博多駅から地下鉄１本「梅林駅」から徒歩9分！<br>
+                            海外の方、日本の方どちらにも人気のある地域です♩<br>
                             長期も大歓迎です☆</p>
                         <a href="https://www.airbnb.jp/rooms/1509536430999585764?source_impression_id=p3_1772417380_P3Kc10rWjl71XreT"
-                            class="button">外部予約サイトで見る</a>
+                            class="button" target="_blank" rel="noopener">外部予約サイトで見る</a>
                     </div>
                 </div>
 
                 <div class="card fade">
                     <div class="card-image">
-                        <img src="img/スペース福岡.avif" alt="スペース福岡">
+                        <img src="img/スペース福岡.avif" alt="福岡 梅林エリアの民泊施設 スペース福岡" loading="lazy">
                     </div>
                     <div class="card-body">
                         <h3>スペース福岡</h3>
-                        <div class="meta">地下鉄梅林駅まで徒歩約8分 / 福大前駅まで約10分 / 博多 / 天神まで地下鉄で20分/ 最大3名</div>
-                        <p>博多駅から地下鉄１本「梅林駅」から徒歩9分！
-                            海外の方、日本の方どちらにも人気のある地域です♩
+                        <div class="meta">地下鉄梅林駅まで徒歩約8分<br>福大前駅まで約10分<br>博多 / 天神まで地下鉄で20分<br>最大3名</div>
+                        <p>博多駅から地下鉄１本「梅林駅」から徒歩9分！<br>
+                            海外の方、日本の方どちらにも人気のある地域です♩<br>
                             長期も大歓迎です☆</p>
                         <a href="https://www.airbnb.jp/rooms/1541931456705126857?source_impression_id=p3_1772418272_P3gFlWuL6GlCSJy6"
-                            class="button">外部予約サイトで見る</a>
+                            class="button" target="_blank" rel="noopener">外部予約サイトで見る</a>
                     </div>
                 </div>
 
                 <div class="card fade">
                     <div class="card-image">
-                        <img src="img/シーサイド姪浜.avif" alt="薬院エリアの落ち着いた室内">
+                        <img src="img/シーサイド姪浜.avif" alt="福岡 姪浜エリアの戸建て民泊施設 シーサイド姪浜" loading="lazy">
                     </div>
                     <div class="card-body">
                         <h3>シーサイド姪浜</h3>
-                        <div class="meta">博多駅・福岡空港まで電車で1本！戸建て / 駐車場1台無料最大8名</div>
-                        <p>海、生の松原まで徒歩3分！糸島まで車で20分！
-                            自然が好きな方はすごくおすすめです◎
-                            ドームまでも電車で一本です。
-
+                        <div class="meta">博多駅・福岡空港まで電車で1本！戸建て<br>駐車場1台無料<br>最大8名</div>
+                        <p>海、生の松原まで徒歩3分！糸島まで車で20分！<br>
+                            自然が好きな方はすごくおすすめです◎<br>
+                            ドームまでも電車で一本です。<br>
+<br>
                             無料駐車場を1台分完備しており、近隣に有料駐車場もあるため、レンタカーでお越しのお客様にもおすすめです。</p>
                         <a href="https://www.airbnb.jp/rooms/1580003299039301217?source_impression_id=p3_1772418925_P3yFXngRz2ox7-K0"
-                            class="button">外部予約サイトで見る</a>
+                            class="button" target="_blank" rel="noopener">外部予約サイトで見る</a>
                     </div>
                 </div>
 
@@ -724,7 +743,7 @@
         </div>
 
         <div class="container">
-            <p class="footer-copy">© 2026 T Co., Ltd.</p>
+            <p class="footer-copy">© 2026 T Co., Ltd. All rights reserved.</p>
         </div>
     </footer>
 
